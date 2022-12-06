@@ -15,10 +15,10 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link >
+                    <x-nav-link :href="route('categories')" :active="request()->routeIs('categories')">
                         {{ __('Categories') }}
                     </x-nav-link>
-                    <x-nav-link >
+                    <x-nav-link :href="route('stocks')" :active="request()->routeIs('stocks')">
                         {{ __('Stocks') }}
                     </x-nav-link>
                 </div>
@@ -72,10 +72,10 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link>
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('categories')" :active="request()->routeIs('categories')">
+                {{ __('Categories') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('stocks')" :active="request()->routeIs('stocks')">
                 {{ __('Stocks') }}
             </x-responsive-nav-link>
         </div>

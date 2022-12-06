@@ -4,6 +4,5 @@
             {{ __('Categories') }}
         </h2>
     </x-slot>
-
     <livewire:categories.index />
 </x-app-layout>
