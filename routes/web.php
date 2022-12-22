@@ -16,6 +16,9 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::get('/stocks', function () {
         return view('pages.admin.stocks');
     })->name('stocks');
+    Route::get('/products', function () {
+        return view('pages.admin.products');
+    })->name('products');
 });
 
 require __DIR__.'/auth.php';

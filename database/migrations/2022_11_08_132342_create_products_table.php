@@ -16,11 +16,10 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('categorie_id')->constrained()->onDelete('cascade');
-            $table->unique('categorie_id');
-            $table->string('image');
+            $table->string('image')->nullable(true);
             $table->string('name_product', 249);
             $table->float('price', 10, 3);
-            $table->smallInteger('stocks');
+            $table->smallInteger('stock');
             $table->timestamps();
         });
     }
