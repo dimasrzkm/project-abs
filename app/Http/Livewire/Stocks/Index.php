@@ -95,7 +95,9 @@ class Index extends Component
             $editedStock = Stock::find($stock['id']);
             if ($editedStock) {
                 if (strtolower($action) == 'edit') {
-                    $stock['amount'] = $stock['quantity'] * 1000;
+                    if ($stock['quantity'] != $editedStock['quantity']) {
+                        $stock['amount'] = $stock['quantity'] * 1000;
+                    }
                     $editedStock->update($stock);
                     $this->editedStockIndex = null;
                 } else {
