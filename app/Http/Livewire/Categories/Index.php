@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Categories;
 
-use Livewire\Component;
 use App\Models\Categorie;
 use Illuminate\Support\Str;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 class Index extends Component
@@ -12,13 +12,21 @@ class Index extends Component
     use WithPagination;
 
     //store and view
-    public $categories = [], $editedCategorieIndex = null, $deletedCategorieIndex = null;
+    public $categories = [];
+
+    public $editedCategorieIndex = null;
+
+    public $deletedCategorieIndex = null;
+
     public $nameCategorie;
 
     //datables
     public $sortByField = 'categorie';
+
     public $sortDirection = 'asc';
+
     public $search = '';
+
     public $showPerPage = 5;
 
     //listener
@@ -46,7 +54,7 @@ class Index extends Component
     public function sortBy($field)
     {
         $this->sortDirection = ($this->sortDirection == 'asc') ? 'desc' : 'asc';
-        $this->sortByField = $field; 
+        $this->sortByField = $field;
     }
 
     public function showPage($page)
@@ -63,9 +71,9 @@ class Index extends Component
     public function actionModal($action)
     {
         $categorie = $this->categories[($action == 'edit') ? $this->editedCategorieIndex : $this->deletedCategorieIndex] ?? null;
-        if (!is_null($categorie)) {
+        if (! is_null($categorie)) {
             $editedCategorie = Categorie::find($categorie['id']);
-            if($editedCategorie) {
+            if ($editedCategorie) {
                 if (strtolower($action) == 'edit') {
                     $categorie['slug'] = Str::slug($categorie['categorie']);
                     $editedCategorie->update($categorie);
@@ -81,7 +89,7 @@ class Index extends Component
     public function store()
     {
         $this->validate([
-            'nameCategorie' => 'required|min:3'
+            'nameCategorie' => 'required|min:3',
         ]);
         Categorie::create([
             'categorie' => $this->nameCategorie,
@@ -97,6 +105,7 @@ class Index extends Component
         $this->categories = Categorie::search($this->search)->orderBy($this->sortByField, $this->sortDirection)->paginate($this->showPerPage);
         $links = $this->categories;
         $this->categories = collect($this->categories->items());
+
         return view('livewire.categories.index', [
             'categories' => $this->categories,
             'links' => $links,

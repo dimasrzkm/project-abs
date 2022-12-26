@@ -175,7 +175,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <div class="p-6 space-y-6 overflow-y-auto lg:h-auto h-[460px]">
+                <div class="p-6 space-y-6 overflow-y-auto lg:h-auto lg:max-h-[460px] h-[460px]">
                     @for ($i = 0; $i < count($storeStocks); $i++)
                         <div class="flex flex-col md:flex-row md:justify-between">
                             <div>

@@ -61,7 +61,7 @@
                     </td>
                     <td class="border-dashed border-t border-gray-200 firstName">
                         <span
-                            class="text-gray-700 px-6 py-3 flex items-center">{{ $product['price'] }}</span>
+                            class="text-gray-700 px-6 py-3 flex items-center">Rp. {{ number_format($product['price'], 0, ',', '.') }}</span>
                     </td>
                     <td class="border-dashed border-t border-gray-200 firstName">
                         <span
@@ -122,7 +122,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <div class="p-6 space-y-6 overflow-y-auto lg:h-auto">
+                <div class="p-6 space-y-6 overflow-y-auto lg:h-auto lg:max-h-[460px] h-[460px]">
                     <div class="grid grid-cols-6 gap-6 ">
                         <div class="col-span-6 sm:col-span-3">
                             <label for="name-product"

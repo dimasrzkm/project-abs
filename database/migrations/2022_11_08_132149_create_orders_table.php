@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('status', ['waiting', 'deliver']);
+            $table->float('total', 10, 3);
+            $table->date('date_order');
             $table->timestamps();
         });
     }

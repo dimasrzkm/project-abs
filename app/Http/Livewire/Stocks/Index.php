@@ -3,21 +3,30 @@
 namespace App\Http\Livewire\Stocks;
 
 use App\Models\Stock;
-use Livewire\Component;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 class Index extends Component
 {
     use WithPagination;
-    public $stocks, $editedStockIndex = null, $deletedStockIndex = null;
+
+    public $stocks;
+
+    public $editedStockIndex = null;
+
+    public $deletedStockIndex = null;
+
     public $storeStocks = [];
 
     // datables
-    public $sortByField = 'name_stock';
-    public $sortDirection = 'asc';
+    public $sortByField = 'date_buy';
+
+    public $sortDirection = 'desc';
+
     public $search = '';
+
     public $showPerPage = 5;
 
     //listener
@@ -36,16 +45,16 @@ class Index extends Component
     public function resetNewStock()
     {
         $sumOfStocks = count($this->storeStocks);
-        if ($sumOfStocks<= 1) {
+        if ($sumOfStocks <= 1) {
             array_pop($this->storeStocks);
             $this->addNewStock();
-        } else if ($sumOfStocks > 1 && !is_null($this->storeStocks)) {
-            for ($i=0; $i <= $sumOfStocks; $i++) { 
+        } elseif ($sumOfStocks > 1 && ! is_null($this->storeStocks)) {
+            for ($i = 0; $i <= $sumOfStocks; $i++) {
                 array_pop($this->storeStocks);
             }
             $this->addNewStock();
         } else {
-            for ($i=0; $i < $sumOfStocks - 1; $i++) { 
+            for ($i = 0; $i < $sumOfStocks - 1; $i++) {
                 array_pop($this->storeStocks);
             }
         }
@@ -65,9 +74,9 @@ class Index extends Component
     public function sortBy($field)
     {
         $this->sortDirection = ($this->sortDirection == 'asc') ? 'desc' : 'asc';
-        $this->sortByField = $field; 
+        $this->sortByField = $field;
     }
-    
+
     public function showPage($page)
     {
         $this->showPerPage = $page;
@@ -78,13 +87,13 @@ class Index extends Component
     {
         $this->resetPage();
     }
-    
+
     public function actionModal($action)
     {
         $stock = $this->stocks[($action == 'edit') ? $this->editedStockIndex : $this->deletedStockIndex] ?? null;
-        if (!is_null($stock)) {
+        if (! is_null($stock)) {
             $editedStock = Stock::find($stock['id']);
-            if($editedStock) {
+            if ($editedStock) {
                 if (strtolower($action) == 'edit') {
                     $stock['amount'] = $stock['quantity'] * 1000;
                     $editedStock->update($stock);
@@ -112,14 +121,14 @@ class Index extends Component
     public function store()
     {
         $this->validate();
-        for ($i=0; $i < count($this->storeStocks); $i++) {
+        for ($i = 0; $i < count($this->storeStocks); $i++) {
             Stock::Create([
                 'user_id' => Auth::user()->id,
                 'name_stock' => $this->storeStocks[$i]['name_stock'],
                 'amount' => $this->storeStocks[$i]['quantity'] * 1000,
                 'quantity' => $this->storeStocks[$i]['quantity'],
                 'price' => $this->storeStocks[$i]['price'],
-                'date_buy' => Carbon::now()->format('Y/m/d')
+                'date_buy' => Carbon::now()->format('Y/m/d'),
             ]);
         }
         $this->emit('refreshComponent');
@@ -128,10 +137,13 @@ class Index extends Component
 
     public function render()
     {
-         // search
-         $this->stocks = Stock::with('user')->search($this->search)->orderBy($this->sortByField, $this->sortDirection)->paginate($this->showPerPage);
-         $links = $this->stocks;
-         $this->stocks = collect($this->stocks->items());
+        // search
+        // dd(Stock::with('user')->find(1)->user->name);
+        $this->stocks = Stock::with('user')->search($this->search)->orderBy($this->sortByField, $this->sortDirection)->paginate
+        ($this->showPerPage);
+        $links = $this->stocks;
+        $this->stocks = collect($this->stocks->items());
+
         return view('livewire.stocks.index', [
             'stocks' => $this->stocks,
             'links' => $links,

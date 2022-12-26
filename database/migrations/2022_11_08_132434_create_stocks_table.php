@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name_stock');
-            $table->float('amount', 10, 3);            
-            $table->float('quantity', 10, 3);            
+            $table->float('amount', 10, 3);
+            $table->float('quantity', 10, 3);
             $table->float('price', 10, 3);
             $table->date('date_buy');
             $table->timestamps();
