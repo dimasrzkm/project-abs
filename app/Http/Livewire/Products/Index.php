@@ -101,15 +101,24 @@ class Index extends Component
         $this->resetPage();
     }
 
+    protected $rules = [
+        'nameProduct' => ['required'],
+        'price' => ['required', 'numeric'],
+        'stock' => ['required'],
+        'idCategorie' => ['required'],
+        'stock' => ['required'],
+        'recipeStocks.*.stock_id' => ['required'],
+        'recipeStocks.*.amount' => ['required'],
+    ];
+
+    protected $validationAttributes = [
+        'recipeStocks.*.stock_id' => 'stock_id',
+        'recipeStocks.*.amount' => 'amount',
+    ];
+
     public function store()
     {
-        $this->validate([
-            'nameProduct' => 'required',
-            'price' => 'required',
-            'stock' => 'required',
-            'recipeStocks.*.stock_id' => 'required',
-            'recipeStocks.*.amount' => 'required',
-        ]);
+        $this->validate();
         $product = Product::Create([
             'name_product' => $this->nameProduct,
             'price' => $this->price,

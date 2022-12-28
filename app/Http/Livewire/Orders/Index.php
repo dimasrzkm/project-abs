@@ -155,44 +155,63 @@ class Index extends Component
 
     public function deleteItem($itemIndex)
     {
+        //menginialisasi variable bantuan untuk menyimpan data product dan total harga
         $productDelete = null;
-        $totalPrice = null; //menginialisasi variable bantuan untuk menyimpan data product dan total harga
-        // memastikan apakah item order telah tersisi atau tidak
-        $valueIsSet = ! empty($this->productStore[$itemIndex]) ? $this->productStore[$itemIndex]['product_id'] : null;
-        if ($valueIsSet) {
-            $productDelete = Product::findOrFail($this->productStore[$itemIndex]['product_id']) ?? null;
-            $totalPrice = $productDelete->price * $this->productStore[$itemIndex]['amount'];
-        }
-
-        if ($itemIndex == 0 && count($this->productStore) == 1) {
-            if ($valueIsSet) {
-                $this->total -= $totalPrice;
-                $this->subTotal -= ($totalPrice + $this->tax);
+        $totalPrice = null;
+        $productIdWillEdited = empty($this->productStore[$itemIndex]['product_id']);
+        $productAmount = empty($this->productStore[$itemIndex]['amount']);
+        
+        // memastikan bahwa product dan amount telah terisi 
+        if ($productIdWillEdited || $productAmount) {
+            $sumOfProductStore = count($this->productStore);
+            // jika belum terisi maka item akan dihapus
+            if ($sumOfProductStore == 1) {
+                array_shift($this->productStore);
+            } else if($sumOfProductStore >= 1) {
+                array_splice($this->productStore, $itemIndex, 1);
             }
-            $this->tempAmount = $this->productStore[0]['amount'];
-            $this->tempProductId = $this->productStore[0]['product_id'];
-            array_shift($this->productStore);
-        } elseif ($itemIndex == 0) {
-            // dd('ini jalan 1');
-            if ($valueIsSet) {
-                $this->total -= $totalPrice;
-                $this->subTotal = $this->total + $this->tax;
-            }
-            array_shift($this->productStore);
-        } elseif ($itemIndex > 0 && $itemIndex < count($this->productStore) - 1) {
-            // dd($itemIndex, count($this->productStore), 'ini jalan 2');
-            if ($valueIsSet) {
-                $this->total -= $totalPrice;
-                $this->subTotal = $this->total + $this->tax;
-            }
+        } else if (($productIdWillEdited == false && $productAmount == false) && empty($this->productStore[$itemIndex]['is_confirm'])) {
             array_splice($this->productStore, $itemIndex, 1);
-        } else {
-            // dd('ini jalan 3');
+        } else { 
+            // mengambil id untuk mencari product
+            $valueIsSet = !empty($this->productStore[$itemIndex]) ? $this->productStore[$itemIndex]['product_id'] : null;
             if ($valueIsSet) {
-                $this->total -= $totalPrice;
-                $this->subTotal = $this->total + $this->tax;
+                $productDelete = Product::findOrFail($this->productStore[$itemIndex]['product_id']) ?? null;
+                $totalPrice = $productDelete->price * $this->productStore[$itemIndex]['amount'];
             }
-            array_pop($this->productStore);
+            // dd('ss',$totalPrice);
+            if ($itemIndex == 0 && count($this->productStore) == 1) {
+                // dd('jalan 0');
+                if ($valueIsSet) {
+                    $this->total -= $totalPrice;
+                    $this->subTotal -= ($totalPrice + $this->tax);
+                }
+                $this->tempAmount = $this->productStore[0]['amount'];
+                $this->tempProductId = $this->productStore[0]['product_id'];
+                array_shift($this->productStore);
+            } elseif ($itemIndex == 0) {
+                // dd('ini jalan 1');
+                if ($valueIsSet) {
+                    $this->total -= $totalPrice;
+                    $this->subTotal = $this->total + $this->tax;
+                }
+                array_shift($this->productStore);
+            } elseif ($itemIndex > 0 && $itemIndex < count($this->productStore) - 1) {
+                // dd($itemIndex, count($this->productStore), 'ini jalan 2');
+                if ($valueIsSet) {
+                    $this->total -= $totalPrice;
+                    $this->subTotal = $this->total + $this->tax;
+                }
+                array_splice($this->productStore, $itemIndex, 1);
+            } else {
+                // dd('ini jalan 3', count($this->productStore), $this->productStore);
+                if ($valueIsSet) {
+                    $this->total -= $totalPrice;
+                    $this->subTotal = $this->total + $this->tax;
+                }
+                array_pop($this->productStore);
+            }
+
         }
     }
 
@@ -209,8 +228,22 @@ class Index extends Component
         ]);
     }
 
+    
+    protected $rules = [
+        'tanggalTransaksi' => ['required', 'date'],
+        'productStore.*.product_id' => ['required'],
+        'productStore.*.amount' => ['required'],
+    ];
+
+    protected $validationAttributes = [
+        'productStore.*.product_id' => 'product',
+        'productStore.*.amount' => 'amount',
+    ];
+
+
     public function store()
     {
+        $this->validate();
         $ordersCreate = Order::create([
             'user_id' => Auth::user()->id,
             'status' => 'waiting',

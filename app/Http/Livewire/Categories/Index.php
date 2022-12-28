@@ -86,11 +86,13 @@ class Index extends Component
         }
     }
 
+    protected $rules = [
+        'nameCategorie' => ['required', 'min:3'],
+    ];
+
     public function store()
     {
-        $this->validate([
-            'nameCategorie' => 'required|min:3',
-        ]);
+        $this->validate();
         Categorie::create([
             'categorie' => $this->nameCategorie,
             'slug' => Str::slug($this->nameCategorie, '-'),
