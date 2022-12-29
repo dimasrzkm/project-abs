@@ -33,8 +33,8 @@ class Product extends Model
         return $query->where('name_product', 'like', '%'.$value.'%')
                 ->orWhere('price', 'like', '%'.$value.'%')
                 ->orWhere(function ($query2) use ($value) {
-                    $query2->whereHas('categorie', function($query3) use ($value) {
-                        $query3->where('categorie', 'like', '%'.$value.'%'); 
+                    $query2->whereHas('categorie', function ($query3) use ($value) {
+                        $query3->where('categorie', 'like', '%'.$value.'%');
                     });
                 });
     }

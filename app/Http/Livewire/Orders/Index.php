@@ -35,6 +35,8 @@ class Index extends Component
 
     public $qrUrl = null;
 
+    public $namaPenerima = null;
+
     //datables
     public $sortByField = 'id';
 
@@ -113,8 +115,9 @@ class Index extends Component
         $this->actionForm = strtolower($action);
         if ($this->actionForm == 'edit') {
             $this->editedOrderId = $params[0]; //idorder
-            $orderEdit = Order::find($this->editedOrderId);
-            $userId = $orderEdit->user_id;
+            $orderEdit = Order::with('user')->find($this->editedOrderId);
+            $this->namaPenerima = $orderEdit->user->name;
+            // $userId = $orderEdit->user_id;
             $this->tanggalTransaksi = date('Y-m-d', strtotime($orderEdit->date_order));
 
             $this->productStore = null;
@@ -160,21 +163,21 @@ class Index extends Component
         $totalPrice = null;
         $productIdWillEdited = empty($this->productStore[$itemIndex]['product_id']);
         $productAmount = empty($this->productStore[$itemIndex]['amount']);
-        
-        // memastikan bahwa product dan amount telah terisi 
+
+        // memastikan bahwa product dan amount telah terisi
         if ($productIdWillEdited || $productAmount) {
             $sumOfProductStore = count($this->productStore);
             // jika belum terisi maka item akan dihapus
             if ($sumOfProductStore == 1) {
                 array_shift($this->productStore);
-            } else if($sumOfProductStore >= 1) {
+            } elseif ($sumOfProductStore >= 1) {
                 array_splice($this->productStore, $itemIndex, 1);
             }
-        } else if (($productIdWillEdited == false && $productAmount == false) && empty($this->productStore[$itemIndex]['is_confirm'])) {
+        } elseif (($productIdWillEdited == false && $productAmount == false) && empty($this->productStore[$itemIndex]['is_confirm'])) {
             array_splice($this->productStore, $itemIndex, 1);
-        } else { 
+        } else {
             // mengambil id untuk mencari product
-            $valueIsSet = !empty($this->productStore[$itemIndex]) ? $this->productStore[$itemIndex]['product_id'] : null;
+            $valueIsSet = ! empty($this->productStore[$itemIndex]) ? $this->productStore[$itemIndex]['product_id'] : null;
             if ($valueIsSet) {
                 $productDelete = Product::findOrFail($this->productStore[$itemIndex]['product_id']) ?? null;
                 $totalPrice = $productDelete->price * $this->productStore[$itemIndex]['amount'];
@@ -211,7 +214,6 @@ class Index extends Component
                 }
                 array_pop($this->productStore);
             }
-
         }
     }
 
@@ -228,7 +230,6 @@ class Index extends Component
         ]);
     }
 
-    
     protected $rules = [
         'tanggalTransaksi' => ['required', 'date'],
         'productStore.*.product_id' => ['required'],
@@ -239,7 +240,6 @@ class Index extends Component
         'productStore.*.product_id' => 'product',
         'productStore.*.amount' => 'amount',
     ];
-
 
     public function store()
     {

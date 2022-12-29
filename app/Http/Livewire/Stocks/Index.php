@@ -141,8 +141,7 @@ class Index extends Component
     {
         // search
         // dd(Stock::with('user')->find(1)->user->name);
-        $this->stocks = Stock::with('user')->search($this->search)->orderBy($this->sortByField, $this->sortDirection)->paginate
-        ($this->showPerPage);
+        $this->stocks = Stock::with('user')->search($this->search)->orderBy($this->sortByField, $this->sortDirection)->paginate($this->showPerPage);
         $links = $this->stocks;
         $this->stocks = collect($this->stocks->items());
 
