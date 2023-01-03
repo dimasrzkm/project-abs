@@ -18,6 +18,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/stocks', function () {
         return view('pages.admin.stocks');
     })->name('stocks');
+    Route::get('/pembukuan', function () {
+        return view('pages.admin.pembukuan');
+    })->name('pembukuan');
     Route::get('/products', function () {
         return view('pages.admin.products');
     })->name('products');

@@ -4,8 +4,10 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class partials.sort-icon extends Component
+class dataTable extends Component
 {
+    public $datePicker = null;
+
     /**
      * Create a new component instance.
      *
@@ -23,6 +25,6 @@ class partials.sort-icon extends Component
      */
     public function render()
     {
-        return view('components.partials.sort-icon');
+        return view('components.data-table');
     }
 }

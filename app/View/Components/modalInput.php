@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class data-table extends Component
+class modalInput extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class data-table extends Component
      */
     public function render()
     {
-        return view('components.data-table');
+        return view('components.modal-input');
     }
 }

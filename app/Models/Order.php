@@ -28,6 +28,11 @@ class Order extends Model
         return $this->belongsToMany(Product::class)->withPivot('amount');
     }
 
+    public function pembukuan()
+    {
+        return $this->hasMany(Pembukuan::class);
+    }
+
     // pembuatan local scope
     public function scopeSearch($query, $value)
     {

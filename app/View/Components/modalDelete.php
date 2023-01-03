@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class modal-input extends Component
+class modalDelete extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class modal-input extends Component
      */
     public function render()
     {
-        return view('components.modal-input');
+        return view('components.modal-delete');
     }
 }

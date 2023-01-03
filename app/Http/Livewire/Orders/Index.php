@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Orders;
 
 use App\Models\Order;
+use App\Models\Pembukuan;
 use App\Models\Product;
 use App\Models\Receipt;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -118,7 +119,7 @@ class Index extends Component
             $orderEdit = Order::with('user')->find($this->editedOrderId);
             $this->namaPenerima = $orderEdit->user->name;
             // $userId = $orderEdit->user_id;
-            $this->tanggalTransaksi = date('Y-m-d', strtotime($orderEdit->date_order));
+            $this->tanggalTransaksi = $orderEdit->date_order->format('Y-m-d');
 
             $this->productStore = null;
             foreach ($orderEdit->products as $data) {
@@ -256,6 +257,15 @@ class Index extends Component
                 $this->productStore[$i]['product_id'] => ['amount' => $this->productStore[$i]['amount']],
             ]);
         }
+        // memasukan data ke dalam table pembukuan
+        Pembukuan::create([
+            'jumlah' => 1,
+            'order_id' => $ordersCreate->id,
+            'nominal_masuk' => $this->subTotal,
+            'nominal_keluar' => 0,
+            'keterangan' => 'Produk Terjual, No order OD-'.str_pad($ordersCreate->id, 4, '0', STR_PAD_LEFT),
+            'tanggal' => $ordersCreate->date_order,
+        ]);
 
         $this->emit('refreshComponent');
         $this->resetAttributes();
@@ -295,6 +305,8 @@ class Index extends Component
                     ]);
                 }
             }
+            $buku = Pembukuan::where('order_id', $this->editedOrderId)->first();
+            $buku->update(['nominal_masuk' => $editedOrder->total]);
         }
     }
 
@@ -303,6 +315,7 @@ class Index extends Component
         if ($this->deletedOrderId) {
             $deletedOrder = Order::find($this->deletedOrderId);
             ($deletedOrder) ? $deletedOrder->delete() : 'Tidak ada Order';
+            Pembukuan::where('order_id', $this->deletedOrderId)->delete();
             $this->resetAttributes();
         }
     }
