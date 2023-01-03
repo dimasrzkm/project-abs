@@ -190,8 +190,6 @@ class Index extends Component
                     $this->total -= $totalPrice;
                     $this->subTotal -= ($totalPrice + $this->tax);
                 }
-                $this->tempAmount = $this->productStore[0]['amount'];
-                $this->tempProductId = $this->productStore[0]['product_id'];
                 array_shift($this->productStore);
             } elseif ($itemIndex == 0) {
                 // dd('ini jalan 1');
@@ -221,14 +219,19 @@ class Index extends Component
     public function generatePdf($id)
     {
         $data = Order::with(['user', 'receipt'])->find($id);
-        $pdf = Pdf::loadView('pdf.receipts', ['data' => $data])->setPaper('a4', 'portait');
-        $nameFile = 'invoice-OD'.str_pad($data->id, 4, '0', STR_PAD_LEFT).'.pdf';
-        Storage::put("public/pdf/$nameFile", $pdf->output());
-        Receipt::create([
-            'order_id' => $data->id,
-            'name_file' => $nameFile,
-            'url' => 'pdf/',
-        ]);
+        if(empty($data->receipt->order_id)) {
+            $pdf = Pdf::loadView('pdf.receipts', ['data' => $data])->setPaper('a4', 'portait');
+            $nameFile = 'invoice-OD'.str_pad($data->id, 4, '0', STR_PAD_LEFT).'.pdf';
+            Storage::put("public/pdf/$nameFile", $pdf->output());
+            Receipt::create([
+                'order_id' => $data->id,
+                'name_file' => $nameFile,
+                'url' => 'pdf/',
+            ]);
+        } else {
+            dd('yes salah');
+        }
+        $this->emit('refreshComponent');
     }
 
     protected $rules = [
@@ -323,12 +326,11 @@ class Index extends Component
     public function render()
     {
         // search
-        $orders = Order::with('user')->search($this->search)->orderBy($this->sortByField, $this->sortDirection)->paginate($this->showPerPage);
+        $orders = Order::with(['user', 'receipt'])->search($this->search)->orderBy($this->sortByField, $this->sortDirection)->paginate($this->showPerPage);
         $links = $orders;
         $orders = collect($orders->items());
 
         return view('livewire.orders.index', [
-            // 'orders' => Order::with('user')->get(),
             'orders' => $orders,
             'links' => $links,
         ]);
