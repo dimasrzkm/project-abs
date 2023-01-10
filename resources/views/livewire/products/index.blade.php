@@ -66,17 +66,19 @@
                             <td class="border-t border-gray-200 border-dashed firstName">
                                 <span class="flex items-center px-6 py-3 text-gray-700">{{ $product['stock'] }}</span>
                             </td>
-                            <td class="border-t border-gray-200 border-dashed phoneNumber">
-                                <span class="flex items-center gap-2 px-6 py-3 text-gray-700">
-                                    <button type="button" @click="open = true"
-                                        wire:click.prevent="actionModal('edit', {{ $product['id'] }})"
-                                        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Edit</button>
-                                    <button type="button" {{-- wire:click.prevent="deleteProduct({{ $index }})" --}}
-                                        wire:click.prevent="actionModal('hapus', {{ $index }})"
-                                        @click="openDelete = true"
-                                        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Delete</button>
-                                </span>
-                            </td>
+                            @can('isAdmin')
+                                <td class="border-t border-gray-200 border-dashed phoneNumber">
+                                    <span class="flex items-center gap-2 px-6 py-3 text-gray-700">
+                                        <button type="button" @click="open = true"
+                                            wire:click.prevent="actionModal('edit', {{ $product['id'] }})"
+                                            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Edit</button>
+                                        <button type="button" {{-- wire:click.prevent="deleteProduct({{ $index }})" --}}
+                                            wire:click.prevent="actionModal('hapus', {{ $index }})"
+                                            @click="openDelete = true"
+                                            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Delete</button>
+                                    </span>
+                                </td>
+                            @endcan
                         </tr>
                     @empty
                         <tr>

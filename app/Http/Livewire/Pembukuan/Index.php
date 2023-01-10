@@ -4,13 +4,14 @@ namespace App\Http\Livewire\Pembukuan;
 
 use App\Exports\PembukuanExport;
 use App\Models\Pembukuan;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 
 class Index extends Component
 {
-    use WithPagination;
+    use WithPagination, AuthorizesRequests;
 
     public $pembukuan = [];
 
@@ -137,6 +138,7 @@ class Index extends Component
 
     public function render()
     {
+        $this->authorize('isAdmin');
         // search
         $this->pembukuan = Pembukuan::search($this->search)->orderBy($this->sortByField, $this->sortDirection)->paginate($this->showPerPage);
         $links = $this->pembukuan;

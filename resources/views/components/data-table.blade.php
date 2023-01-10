@@ -1,11 +1,13 @@
 <div class="relative overflow-x-auto sm:rounded-lg">
     <div class="w-full px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
 
-        <button
-            class="inline-flex items-center text-white bg-gray-800 hover:bg-gray-900 border border-white focus:outline-none font-semibold rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 mb-5"
-            type="button" @click="open = !open">
-            Tambah {{ $title }}
-        </button>
+        @can('isAdmin')
+            <button
+                class="inline-flex items-center text-white bg-gray-800 hover:bg-gray-900 border border-white focus:outline-none font-semibold rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 mb-5"
+                type="button" @click="open = !open">
+                Tambah {{ $title }}
+            </button>
+        @endcan
 
         {{-- search and page --}}
         <div class="flex items-center justify-between mb-4">
@@ -119,10 +121,12 @@
                             </label>
                         </th>
                         {{ $tbHead }}
-                        <th
-                            class="sticky top-0 px-6 py-2 text-xs font-bold tracking-wider text-gray-600 uppercase bg-gray-200 border-b border-gray-200 firstName">
-                            Action
-                        </th>
+                        @can('isAdmin')
+                            <th
+                                class="sticky top-0 px-6 py-2 text-xs font-bold tracking-wider text-gray-600 uppercase bg-gray-200 border-b border-gray-200 firstName">
+                                Action
+                            </th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
