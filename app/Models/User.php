@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -50,5 +51,12 @@ class User extends Authenticatable
     public function stock()
     {
         return $this->hasMany(Stock::class);
+    }
+
+    // pembuatan local scope
+    public function scopeSearch($query, $value)
+    {
+        return $query->where('name', 'like', '%'.$value.'%')
+        ->orWhere('email', 'like', '%'.$value.'%');
     }
 }

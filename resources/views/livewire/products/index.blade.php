@@ -72,7 +72,7 @@
                                         <button type="button" @click="open = true"
                                             wire:click.prevent="actionModal('edit', {{ $product['id'] }})"
                                             class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Edit</button>
-                                        <button type="button" {{-- wire:click.prevent="deleteProduct({{ $index }})" --}}
+                                        <button type="button"
                                             wire:click.prevent="actionModal('hapus', {{ $index }})"
                                             @click="openDelete = true"
                                             class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Delete</button>
@@ -188,9 +188,12 @@
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     <option selected>Choose a ingridients</option>
                                     @foreach ($recipes as $recipe)
-                                        <option value="{{ $recipe->id }}">{{ $recipe->name_stock }},
-                                            {{ $recipe->amount }}
-                                            {{ $carbon::parse($recipe->date_buy)->diffForHumans() }}</option>
+                                        <option value="{{ $recipe->id }}">{{ $recipe->name_stock }}
+                                            @if ($actionForm == 'tambah' || $actionForm == 'hapus')
+                                                ,{{ $recipe->amount }}
+                                                {{ $carbon::parse($recipe->date_buy)->diffForHumans() }}
+                                            @endif
+                                        </option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('recipeStocks.' . $i . '.stock_id'))
@@ -208,11 +211,6 @@
                                         {{ $errors->first('recipeStocks.' . $i . '.amount') }}
                                     </span>
                                 @endif
-                                {{-- @if ($errors->has('recipeStocks.{{ $i }}.amount'))
-                                    <span class="text-red-700 ">
-                                        {{ $errors->first('recipeStocks.{{ $i }}.amount') }}
-                                    </span>
-                                @endif --}}
                             </div>
                         @endfor
                         <div class="col-span-6 sm:-col-span-3">

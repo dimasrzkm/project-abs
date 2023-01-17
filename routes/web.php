@@ -30,6 +30,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/receipts/{receipt:name_file}', function (Receipt $receipt) {
         return Storage::response('public/pdf/'.$receipt->name_file);
     });
+
+    Route::get('/users', function () {
+        return view('pages.admin.users');
+    })->name('users');
+
 });
 
 require __DIR__.'/auth.php';

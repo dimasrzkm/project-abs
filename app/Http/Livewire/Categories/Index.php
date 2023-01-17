@@ -80,7 +80,6 @@ class Index extends Component
                     $this->editedCategorieIndex = null;
                 } else {
                     $editedCategorie->delete();
-                    $this->deletedStockIndex = null;
                 }
             }
         }
@@ -103,7 +102,6 @@ class Index extends Component
 
     public function render()
     {
-        // search
         $this->categories = Categorie::search($this->search)->orderBy($this->sortByField, $this->sortDirection)->paginate($this->showPerPage);
         $links = $this->categories;
         $this->categories = collect($this->categories->items());

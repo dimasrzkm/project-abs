@@ -1,5 +1,5 @@
 <div x-cloak x-show="open" @click.outside="open = false"
-    class="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center py-6 px-4 w-full md:inset-0 h-full bg-gray-400 bg-opacity-40">
+    class="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full px-4 py-6 overflow-x-hidden overflow-y-auto bg-gray-400 md:inset-0 bg-opacity-40">
     <div class="relative w-full max-w-2xl lg:h-auto">
         <!-- Modal content -->
         {{ $form }}

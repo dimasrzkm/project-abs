@@ -102,10 +102,6 @@ class Index extends Component
     {
         if (empty($this->productStore)) {
             $this->productStore[] = [];
-        } elseif (empty($this->productStore[count($this->productStore) - 1]['is_confirm']) && $this->actionForm == 'tambah') {
-            dd('yes nih');
-        } elseif (empty($this->productStore[count($this->productStore) - 1]['is_confirm']) && $this->actionForm == 'edit') {
-            dd('yes');
         } else {
             $this->productStore[] = [];
         }
@@ -118,7 +114,6 @@ class Index extends Component
             $this->editedOrderId = $params[0]; //idorder
             $orderEdit = Order::with('user')->find($this->editedOrderId);
             $this->namaPenerima = $orderEdit->user->name;
-            // $userId = $orderEdit->user_id;
             $this->tanggalTransaksi = $orderEdit->date_order->format('Y-m-d');
 
             $this->productStore = null;
@@ -148,13 +143,26 @@ class Index extends Component
 
     public function confirmItem()
     {
-        $idProduct = (int) $this->productStore[count($this->productStore) - 1]['product_id'];
-        $collectionProducts = collect($this->products);
-        $product = $collectionProducts->firstWhere('id', $idProduct);
-        $this->total += $product->price * $this->productStore[count($this->productStore) - 1]['amount'];
-        $this->subTotal = $this->total + $this->tax;
-        $this->productStore[count($this->productStore) - 1]['name_product'] = $product->name_product;
-        $this->productStore[count($this->productStore) - 1]['is_confirm'] = true;
+        $idProductWillConfirm = empty($this->productStore[count($this->productStore) - 1]['product_id']);
+        $amountProductWillConfirm = empty($this->productStore[count($this->productStore) - 1]['amount']);
+
+        // memastikan bahwa product id dan amount telah terisi
+        if ( $idProductWillConfirm && $amountProductWillConfirm) {
+            session()->flash('error_amount', 'yahhh');
+            // dd('jalan');
+        } else if ($idProductWillConfirm != 1 && $amountProductWillConfirm) {
+            dd('ini amount yang salah');
+        } else if ($idProductWillConfirm && $amountProductWillConfirm != 1) {
+            dd('ini id yang salah');
+        }else {
+            $idProduct = (int) $this->productStore[count($this->productStore) - 1]['product_id'];
+            $collectionProducts = collect($this->products);
+            $product = $collectionProducts->firstWhere('id', $idProduct);
+            $this->total += $product->price * $this->productStore[count($this->productStore) - 1]['amount'];
+            $this->subTotal = $this->total + $this->tax;
+            $this->productStore[count($this->productStore) - 1]['name_product'] = $product->name_product;
+            $this->productStore[count($this->productStore) - 1]['is_confirm'] = true;
+        }
     }
 
     public function deleteItem($itemIndex)

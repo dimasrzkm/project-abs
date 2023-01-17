@@ -18,7 +18,6 @@ class Product extends Model
 
     public function stocks()
     {
-        // return $this->belongsToMany(Stock::class)->withTimestamps();
         return $this->belongsToMany(Stock::class)->withPivot('total');
     }
 

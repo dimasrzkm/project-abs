@@ -226,9 +226,6 @@
 
     {{-- modal delete --}}
     <x-modal-delete>
-        <x-slot:action>export</x-slot>
-    </x-modal-delete>
-    {{-- <x-modal-delete>
         <x-slot:action>deletePembukuan</x-slot>
-    </x-modal-delete> --}}
+    </x-modal-delete>
 </div>

@@ -132,7 +132,7 @@ class Index extends Component
         if ($this->startDateFilter != null && $this->endDateFilter != null) {
             return Excel::download(new PembukuanExport($this->startDateFilter, $this->endDateFilter), 'pembukuan.xlsx');
         } else {
-            dd('jalan 2');
+            abort(404);
         }
     }
 

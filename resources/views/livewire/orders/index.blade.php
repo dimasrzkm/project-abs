@@ -90,17 +90,19 @@
                                                 </svg>
                                             </button>
                                         @endif
-                                        <button type="button"
-                                            wire:click.prevent="actionModal('generateQR', {{ $order->id }})"
-                                            @click="openQr = true"
-                                            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                                class="w-5 h-5">
-                                                <path fill-rule="evenodd"
-                                                    d="M3 4.875C3 3.839 3.84 3 4.875 3h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013 9.375v-4.5zM4.875 4.5a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zm7.875.375c0-1.036.84-1.875 1.875-1.875h4.5C20.16 3 21 3.84 21 4.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5a1.875 1.875 0 01-1.875-1.875v-4.5zm1.875-.375a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zM6 6.75A.75.75 0 016.75 6h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75A.75.75 0 016 7.5v-.75zm9.75 0A.75.75 0 0116.5 6h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zM3 14.625c0-1.036.84-1.875 1.875-1.875h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.035-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013 19.125v-4.5zm1.875-.375a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zm7.875-.75a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm6 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zM6 16.5a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm9.75 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm-3 3a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm6 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
-                                        </button>
+                                        @if (!empty($order->receipt->order_id))
+                                            <button type="button"
+                                                wire:click.prevent="actionModal('generateQR', {{ $order->id }})"
+                                                @click="openQr = true"
+                                                class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                    fill="currentColor" class="w-5 h-5">
+                                                    <path fill-rule="evenodd"
+                                                        d="M3 4.875C3 3.839 3.84 3 4.875 3h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013 9.375v-4.5zM4.875 4.5a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zm7.875.375c0-1.036.84-1.875 1.875-1.875h4.5C20.16 3 21 3.84 21 4.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5a1.875 1.875 0 01-1.875-1.875v-4.5zm1.875-.375a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zM6 6.75A.75.75 0 016.75 6h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75A.75.75 0 016 7.5v-.75zm9.75 0A.75.75 0 0116.5 6h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zM3 14.625c0-1.036.84-1.875 1.875-1.875h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.035-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013 19.125v-4.5zm1.875-.375a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zm7.875-.75a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm6 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zM6 16.5a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm9.75 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm-3 3a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm6 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
+                                        @endif
                                         <button type="button"
                                             wire:click.prevent="actionModal('hapus', {{ $order->id }})"
                                             @click="openDelete = true"
@@ -302,44 +304,6 @@
             </x-slot>
     </x-modal-input>
 
-    {{-- <div x-cloak x-show="openDelete" @click.outside="openDelete = false"
-        class="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full px-4 py-6 overflow-x-hidden overflow-y-auto bg-gray-400 md:inset-0 bg-opacity-40">
-        <div class="relative flex items-center justify-center w-full h-full max-w-2xl md:h-auto">
-            <div class="my-3 bg-white rounded-lg shadow-lg md:w-2/3 sm:w-full">
-                <div class="flex justify-between px-5 py-4 border-b border-gray-100">
-                    <div>
-                        <div class="flex items-center justify-center gap-1">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path fill="#b91c1c" d="M13 14H11V9H13M13 18H11V16H13M1 21H23L12 2L1 21Z" />
-                            </svg>
-                            <i class="text-orange-500 fa fa-exclamation-triangle"></i>
-                            <span class="text-lg font-bold text-gray-700">Warning</span>
-                        </div>
-                    </div>
-                    <div>
-                        <svg class="w-5 h-5 cursor-pointer" wire:click="actionCancel('edit')"  @click="openDelete = false"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path fill="#D84315"
-                                d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z" />
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="px-10 py-5 text-gray-600">
-                    Anda yakin ingin mengahapus data?
-                </div>
-
-                <div class="flex justify-end px-5 py-4">
-                    <button
-                        class="px-3 py-2 mr-1 text-sm text-white transition duration-150 bg-gray-800 rounded hover:bg-gray-900"
-                        wire:click="actionCancel('edit')"   @click="openDelete = false">Cancel</button>
-                    <button class="px-3 py-2 text-sm text-white transition duration-150 bg-red-600 rounded hover:bg-red-700"
-                        wire:click.prevent="deleteOrder" @click="openDelete = false">OK</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
     {{-- modal delete --}}
     <x-modal-delete>
         <x-slot:action>deleteOrder</x-slot>
@@ -382,4 +346,16 @@
             </div>
         </div>
     </div>
+
+    {{--     
+    @foreach (['amound_id', 'amount', 'id'] as $msg)
+        @if (session('erorr_' . $msg))
+            <x-alert />
+
+            <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}</p>
+        @endif
+    @endforeach --}}
+    @if (session()->has('error_amount'))
+        <x-alert />
+    @endif
 </div>

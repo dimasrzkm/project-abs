@@ -30,7 +30,6 @@ class AuthServiceProvider extends ServiceProvider
          * Returns true if user role is set to admin
          **/ 
         Gate::define('isAdmin', function($user) {
-            // dd(request()->segments()[0]);
             return $user->is_admin == 1;
         });
     }
