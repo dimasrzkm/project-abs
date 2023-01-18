@@ -48,6 +48,7 @@ class Index extends Component
         $this->emailUser = null;
         $this->passwordUser = null;
         $this->roleUser = null;
+        $this->actionForm = 'tambah';
     }
 
     protected $rules = [

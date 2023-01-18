@@ -63,7 +63,7 @@
                 </div>
             </section>
             <section id="contact-profile"
-                class="flex justify-end gap-3 pb-4 border-b-4 cursor-pointer  border-b-gray-400">
+                class="flex justify-end gap-3 pb-4 border-b-4 cursor-pointer border-b-gray-400">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -96,7 +96,8 @@
                     </div>
                     <div class="w-2/3">
                         <h2 class="text-3xl text-neutral-100">Sensai Khas dari Ayang Beib <br /> Steak Siap Menyentuh
-                            <br />Lidah Anda.</h2>
+                            <br />Lidah Anda.
+                        </h2>
                         <p class="mt-5 text-gray-300">
                             "Steak, makanan yang dibuat dengan bahan-bahan premium pilihan Daging steak yang dipotong
                             tebal ini sungguh membuat anda kenyang, apalagi dengan Saus khas dari Ayang Beib Steak
@@ -105,13 +106,13 @@
                     </div>
                 </section>
                 <section class="flex items-start justify-between my-14">
-                    <img src="{{ asset('images/drum.jpg') }}" alt="test"
+                    <img src="{{ asset('images/chocolate_milk.jpeg') }}" alt="test"
                         class="w-52 h-52 rounded-full object-cover object-center drop-shadow-[0_0_15px_rgba(255,255,255,0.65)]">
-                    <img src="{{ asset('images/drum.jpg') }}" alt="test"
+                    <img src="{{ asset('images/tenderloin.jpg') }}" alt="test"
                         class="w-52 h-52 rounded-full object-cover object-center drop-shadow-[0_0_15px_rgba(255,255,255,0.65)]">
-                    <img src="{{ asset('images/drum.jpg') }}" alt="test"
+                    <img src="{{ asset('images/orange_juice.jpg') }}" alt="test"
                         class="w-52 h-52 rounded-full object-cover object-center drop-shadow-[0_0_15px_rgba(255,255,255,0.65)]">
-                    <img src="{{ asset('images/drum.jpg') }}" alt="test"
+                    <img src="{{ asset('images/abs.jpg') }}" alt="test"
                         class="w-52 h-52 rounded-full object-cover object-center drop-shadow-[0_0_15px_rgba(255,255,255,0.65)]">
                 </section>
             </div>

@@ -53,7 +53,9 @@
                                 </span>
                             </td>
                             <td class="border-t border-gray-200 border-dashed cursor-pointer hover:underline"
-                                wire:click.prevent="actionModal('edit', {{ $order->id }})" @click="open = true">
+                                @can('isAdmin')
+                                    wire:click.prevent="actionModal('edit', {{ $order->id }})" @click="open = true"
+                                @endcan>
                                 <span class="flex items-center px-6 py-3 text-gray-700">
                                     {{ 'OD' }}-{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}
                                 </span>
@@ -347,14 +349,6 @@
         </div>
     </div>
 
-    {{--     
-    @foreach (['amound_id', 'amount', 'id'] as $msg)
-        @if (session('erorr_' . $msg))
-            <x-alert />
-
-            <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}</p>
-        @endif
-    @endforeach --}}
     @if (session()->has('error_amount'))
         <x-alert />
     @endif

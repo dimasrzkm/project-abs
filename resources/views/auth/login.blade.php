@@ -8,7 +8,7 @@
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
                 <div class="mb-16 font-bold leading-relaxed text-center">
-                    <h2 class="text-3xl">Welcome Back</h2>
+                    <h2 class="text-3xl">Welcome</h2>
                     <p class="text-xs">Please enter your details.</p>
                 </div>
                 <form method="POST" action="{{ route('login') }}">

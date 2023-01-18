@@ -104,9 +104,9 @@
                 <x-responsive-nav-link :href="route('pembukuan')" :active="request()->routeIs('pembukuan')">
                     {{ __('Pembukuan') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                {{-- <x-responsive-nav-link :href="route('users')" :active="request()->routeIs('users')">
                     {{ __('Users') }}
-                </x-responsive-nav-link>
+                </x-responsive-nav-link> --}}
             @endcan
             <x-responsive-nav-link :href="route('products')" :active="request()->routeIs('products')">
                 {{ __('Products') }}

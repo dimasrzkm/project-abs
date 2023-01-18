@@ -37,7 +37,7 @@
                     <td style="text-align: center;">{{ $data->nominal_masuk != 0 ? $data->nominal_masuk : '-' }}</td>
                     <td style="text-align: center;">{{ $data->nominal_keluar != 0 ? $data->nominal_keluar : '-' }}</td>
                     <td style="text-align: left;">{{ $data->keterangan }}</td>
-                    <td style="text-align: center;">{{ $data->tanggal->format('d F y') }}</td>
+                    <td style="text-align: center;">{{ $data->tanggal->format('d F Y') }}</td>
                     {{ $totalMasuk += $pembukuan[$index]->nominal_masuk }}
                     {{ $totalKeluar += $pembukuan[$index]->nominal_keluar }}
                 </tr>
